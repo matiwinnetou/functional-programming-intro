@@ -135,8 +135,8 @@ public class OptionalTest {
     }
 
     private Map<String, Person> people() {
-        final Person p1 = new Person("Jan", Person.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
-        final Person p2 = new Person("Kathy", Person.FEMALE, 160, 16, Optional.empty());
+        final Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
+        final Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16, Optional.empty());
 
         return Stream.of(p1, p2).collect(Collectors.toMap(p -> p.getName(), p -> p));
     }

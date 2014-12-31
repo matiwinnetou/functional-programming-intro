@@ -12,6 +12,6 @@ public interface Monoid<T> {
 
     T zero();
 
-    BinaryOperator<T> op();
+    BinaryOperator<T> operation();
 
 }

@@ -10,7 +10,7 @@ public class AdditionIntMonoid implements Monoid<Integer> {
     }
 
     @Override
-    public BinaryOperator<Integer> op() {
+    public BinaryOperator<Integer> operation() {
         return (prev, next) -> prev + next;
     }
 

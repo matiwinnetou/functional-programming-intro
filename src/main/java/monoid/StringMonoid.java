@@ -10,7 +10,7 @@ public class StringMonoid implements Monoid<String> {
     }
 
     @Override
-    public BinaryOperator<String> op() {
+    public BinaryOperator<String> operation() {
         return (prev,next) -> prev + next;
     }
 

@@ -1,18 +1,17 @@
+import com.google.common.base.Objects;
+
 import java.util.Optional;
 
 public class Person {
 
-    public static char FEMALE = 'F';
-    public static char MALE = 'M';
-
     private String name;
     private int height;
-    private char gender;
+    private Gender gender;
     private int age;
 
     private Optional<Address> address = Optional.empty();
 
-    public Person(String name, char gender, int height, int age, Optional<Address> address) {
+    public Person(String name, Gender gender, int height, int age, Optional<Address> address) {
         this.name = name;
         this.gender = gender;
         this.height = height;
@@ -28,7 +27,7 @@ public class Person {
         return height;
     }
 
-    public char getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -38,6 +37,38 @@ public class Person {
 
     public Optional<Address> getAddress() {
         return address;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Person person = (Person) obj;
+
+        return Objects.equal(this.name, person.name)
+                && Objects.equal(this.age, person.age)
+                && Objects.equal(this.gender, person.gender)
+                && Objects.equal(this.height, person.height)
+                && Objects.equal(this.address, person.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                this.name,
+                this.height,
+                this.age,
+                this.gender,
+                this.address
+        );
+    }
+
+    public static enum Gender {
+        MALE, FEMALE;
     }
 
     public static class Address {
@@ -64,7 +95,10 @@ public class Person {
             return postCode;
         }
 
+
+
     }
+
 
     @Override
     public String toString() {
