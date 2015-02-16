@@ -54,6 +54,11 @@
 				</section>
 
                 <section>
+                    <h2>What is it?</h2>
+                    <blockquote>"At the heart of functional programming is thinking about your problem domain in terms of immutable values and functions that translate between them."</blockquote>
+                </section>
+
+                <section>
                     <h2>Sceptic's view</h2>
                     <blockquote>"There is of course nothing that is possible in functional but not imperative programming (or vice versa)."</blockquote>
                 </section>
@@ -66,8 +71,8 @@
                     <h2>Nothing comes for free...</h2>
                     <ul>
                         <li>investment into learning new paradigm (brain IOPs)</li>
-                        <li>hard to understanding expert's jargon (WTF - monoid.Monoid, Monad, Applicative Functor)?</li>
-                        <li>community is divided into practical programmers and academics</li>
+                        <li>hard to understanding functional jargon (Monoid, Monad, Applicative Functor)?</li>
+                        <li>community is divided into practical programmers and academics followers of FP</li>
                     </ul>
                 </section>
 
@@ -162,19 +167,45 @@ System.out.println(avg);
                 <section>
                     <h2>Jargon's Galore - ADT (Algebraic Data Type)</h2>
                     <blockquote>"ADT is just a data type defined by one or more data constructors, each of which may contain zero or more arguments."</blockquote>
+                    <blockquote>"In computer programming, particularly functional programming and type theory, an algebraic data type is a kind of composite type,
+                        i.e. a type formed by combining other types. Two common classes of algebraic type are product types, i.e. tuples and records, and sum types, also called tagged unions or variant types.[1]"</blockquote>
                 </section>
 
                 <section>
                     <h2>Jargon's Galore - Higher Order Function (HOF)</h2>
+                    <blockquote>"In FP higher order function is a function that either takes a function as a parameter or outputs a function as a return"</blockquote>
+                    <pre>
+                        <code>
+public void print(int weight, Function&lt;Integer, String&gt; scale) {
+    System.out.println("Printing : " + scale.apply(weight));
+}
+                        </code>
+                    </pre>
                 </section>
 
                 <section>
                     <h2>Jargon's Galore - Partial Function</h2>
-                    <p>this is a function defined only for a few input elements</p>
+                    <blockquote>"In FP partial function is a function that is defined only for a few inputs but not all possible ones"</blockquote>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Side Effect</h2>
+                    <blockquote>"In classical FP a side effect is a situation in which there is a mutation to a state. Classical FP programming operates only on immutable data structures, instead of mutating state, FP programs yield a new state based on old state often using recursive constructs."</blockquote>
                 </section>
 
                 <section>
                     <h2>Strict or Lenient immutability</h2>
+                    <p>
+                        Programming fully in a n
+                    </p>
+                    <p>Explain here that there are some schools which allow mutability within method level</p>
+                </section>
+
+                <section>
+                    <h2>Strict or Lenient immutability</h2>
+                    <p>
+                        Programming fully in a n
+                    </p>
                     <p>Explain here that there are some schools which allow mutability within method level</p>
                 </section>
 
