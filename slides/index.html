@@ -59,6 +59,25 @@
                 </section>
 
                 <section>
+                    <h2>Fan's view</h2><p>
+                    <ul>
+                        <li><blockquote>"Functional programming aims to let you more easily write programs that are concise, with fewer bugs and parallelizable."</blockquote></li>
+                        <li><blockquote>"Using the Functional style allows code to be written that declares its intent clearly, without being mixed up with control flow statements(...)"</blockquote></li>
+                        <li><blockquote>"Because of the principles like side-effect free programming, it is much easier to reason about code, and check its correctness."</blockquote></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Why? What for? Opinions..</h2><p>
+                    <ul>
+                        <li>WHAT instead of HOW? Declaratively communicates programmer's indent clearly</li>
+                        <li>more concise code *IF NOT* abused increases code readability</li>
+                        <li>easier to do parallel programming (immutable data structures, which are thread safe)</li>
+                        <li>ability to write less error prone code</li>
+                    </ul>
+                </section>
+
+                <section>
                     <h2>Sceptic's view</h2>
                     <blockquote>"There is of course nothing that is possible in functional but not imperative programming (or vice versa)."</blockquote>
                 </section>
@@ -77,21 +96,11 @@
                 </section>
 
                 <section>
-                    <h2>Fan's view</h2><p>
-                    <blockquote>"Functional programming aims to let you more easily write programs that are concise, with fewer bugs and parallelizable."</blockquote>
-                    <blockquote>"Using the Functional style allows code to be written that declares its intent clearly, without being mixed up with control flow statements(...)"</blockquote>
-                    <blockquote>"Because of the principles like side-effect free programming, it is much easier to reason about code, and check its correctness."</blockquote>
-                </section>
-
-                <section>
-                    <h2>Why? What for? Opinions..</h2><p>
-                    <ul>
-                        <li>WHAT instead of HOW? Declaratively communicates programmer's indent clearly</li>
-                        <li>more concise code *IF NOT* abused increases code readability</li>
-                        <li>easier to do parallel programming (immutable data structures, which are thread safe)</li>
-                        <li>ability to write less error prone code</li>
+                    <h2>Your Expectations - What I can deliver</h2><p>
+                        <blockquote>"Like OOP learning FP is more like a journey than something you can learn in 1-2 hours."</blockquote>
                     </ul>
                 </section>
+
 
                 <section>
                     <h2>FP - declarative example</h2><p>
@@ -165,10 +174,8 @@ System.out.println(avg);
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - ADT (Algebraic Data Type)</h2>
-                    <blockquote>"ADT is just a data type defined by one or more data constructors, each of which may contain zero or more arguments."</blockquote>
-                    <blockquote>"In computer programming, particularly functional programming and type theory, an algebraic data type is a kind of composite type,
-                        i.e. a type formed by combining other types. Two common classes of algebraic type are product types, i.e. tuples and records, and sum types, also called tagged unions or variant types.[1]"</blockquote>
+                    <h2>Jargon's Galore</h2>
+                    <p>Esoteric nature of FP lies in language. Let's demystify some terms but - only what makes sense in Java 8 to keep it simple for now.</p>
                 </section>
 
                 <section>
@@ -184,21 +191,43 @@ public void print(int weight, Function&lt;Integer, String&gt; scale) {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Partial Function</h2>
-                    <blockquote>"In FP partial function is a function that is defined only for a few inputs but not all possible ones"</blockquote>
+                    <h2>Jargon's Galore - Side Effect free programming</h2>
+                    <blockquote>"In classical FP a side effect is a situation in which there is a mutation to a state.
+                        Classical FP programming operates only on immutable data structures, instead of mutating state, FP programs yield a new state based on old state often using recursion."</blockquote>
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Side Effect</h2>
-                    <blockquote>"In classical FP a side effect is a situation in which there is a mutation to a state. Classical FP programming operates only on immutable data structures, instead of mutating state, FP programs yield a new state based on old state often using recursive constructs."</blockquote>
+                    <h2>Jargon's Galore - Referential Transparency (RT)</h2>
+                    <blockquote>"Referential transparency is one of the principles of functional programming; only referentially transparent functions can be memoized (transformed into equivalent functions which cache results). Some programming languages provide means to guarantee referential transparency."</blockquote>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Memoization</h2>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Currying</h2>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - monomorphic function and polymorphic function</h2>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Monoid</h2>
+
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Monad</h2>
                 </section>
 
                 <section>
                     <h2>Strict or Lenient immutability</h2>
-                    <p>
-                        Programming fully in a n
-                    </p>
-                    <p>Explain here that there are some schools which allow mutability within method level</p>
+                    <ul>
+                        <li>lenient - local side effects acceptable</li>
+                        <li>strict - no side effects acceptable at all</li>
+                    </ul>
                 </section>
 
                 <section>
@@ -220,15 +249,19 @@ public void print(int weight, Function&lt;Integer, String&gt; scale) {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - monoid.Monoid</h2>
-
+                    <h2>What is Java 8 missing</h2>
+                    <ul>
+                        <li>ADT - Algebraic Data Types</li>
+                        <li>Strict and non-strict functions</li>
+                        <li>Pattern Matching</li>
+                        <li>(lifting) - lifting method to function</li>
+                        <li>Tail recursion</li>
+                        <li>value types - case classes</li>
+                        <li>standard functional methods like zip, takeWhile, etc, try [JOOL] - https://github.com/jOOQ/jOOL</li>
+                        <li>limited monads in standard library</li>
+                    </ul>
                 </section>
-
-                <section>
-                    <h2>Jargon's Galore - Monad</h2>
-
-                </section>
-
+                
 
                 <!-- FP is not new - has been for years - scheme, Haskell, etc -->
                 <!-- Only recently more popular as blended with OOP, e.g. OCaml, C#, F#, Scala -->
@@ -278,3 +311,15 @@ public void print(int weight, Function&lt;Integer, String&gt; scale) {
 		</script>
 	</body>
 </html>
+
+<!--<section>-->
+    <!--<h2>Jargon's Galore - ADT (Algebraic Data Type)</h2>-->
+    <!--<blockquote>"ADT is just a data type defined by one or more data constructors, each of which may contain zero or more arguments."</blockquote>-->
+    <!--<blockquote>"In computer programming, particularly functional programming and type theory, an algebraic data type is a kind of composite type,-->
+        <!--i.e. a type formed by combining other types. Two common classes of algebraic type are product types, i.e. tuples and records, and sum types, also called tagged unions or variant types.[1]"</blockquote>-->
+<!--</section>-->
+
+<!--<section>-->
+    <!--<h2>Jargon's Galore - Partial Function</h2>-->
+    <!--<blockquote>"In FP partial function is a function that is defined only for a few inputs but not all possible ones"</blockquote>-->
+<!--</section>-->

@@ -4,7 +4,7 @@ version := "1.0-SNAPSHOT"
 
 javacOptions ++= Seq("-source", "1.8")
 
-autoScalaLibrary := false
+autoScalaLibrary := false //disable scala for this project
 
 libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.9",
