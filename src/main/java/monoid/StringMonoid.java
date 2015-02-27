@@ -4,6 +4,8 @@ import java.util.function.BinaryOperator;
 
 public class StringMonoid implements Monoid<String> {
 
+    public static final StringMonoid INSTANCE = new StringMonoid();
+    
     @Override
     public String zero() {
         return "";
@@ -11,7 +13,7 @@ public class StringMonoid implements Monoid<String> {
 
     @Override
     public BinaryOperator<String> operation() {
-        return (prev,next) -> prev + next;
+        return (prev, next) -> prev + next;
     }
 
 }

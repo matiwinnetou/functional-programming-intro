@@ -1,3 +1,6 @@
+import com.google.common.collect.ImmutableList;
+
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -11,10 +14,28 @@ public class Hello {
         System.out.println("Weight: " + scale.apply(weightInKg));
     }
 
+    private static ImmutableList<Person> people() {
+        final Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
+        final Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
+
+        return ImmutableList.of(p1, p2);
+    }
+
+    private static <T> Optional<T> findPoly() {
+        return people().stream()
+                .filter(isAdult())
+                .map(e -> (T) e)
+                .findAny();
+    }
+
     public static final Function<Double, String> KG_TO_STONES = weight -> String.format("%f stones", weight * 0.157473);
 
     public static void main(String[] args) {
-        Function<Integer, Integer> f = x -> x * 2;
+        final Integer totalAge = people().values().stream()
+                .map(Person::getAge)
+                .reduce(0, (age1, age2) -> age1 + age2);
+
+        System.out.println(totalAge);
     }
 
 }

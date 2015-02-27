@@ -12,14 +12,14 @@ public class OptionalTest {
     public void testOptionalPresentAndMap() {
         final String string = "hello";
 
-        final Optional<String> stringOpt = Optional.of(string);
+        final Optional<String> maybeString = Optional.of(string);
 
-        final Optional<Integer> intOpt = stringOpt
+        final Optional<Integer> maybeInt = maybeString
                 .filter(s -> s.length() > 0)
                 .map(str -> str.length());
 
-        intOpt.ifPresent(i -> System.out.println(i));
-        Assert.assertTrue(intOpt.isPresent());
+        maybeInt.ifPresent(i -> System.out.println(i));
+        Assert.assertTrue(maybeInt.isPresent());
     }
 
     @Test
