@@ -32,5 +32,4 @@ public class MoreOptionals {
         return a.flatMap(aa -> b.map(bb -> zipFunction.apply(aa, bb)));
     }
 
-
 }

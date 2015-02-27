@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Functional programming with Java 8</title>
+		<title>FP with Java 8</title>
 
 		<meta name="description" content="Functional programming with Java 8">
 		<meta name="author" content="Mateusz Szczap">
@@ -42,7 +42,7 @@
 
 			<div class="slides">
 				<section>
-					<h1>Functional programming</h1>
+					<h1>FP</h1>
                     <h3>with Java 8</h3>
     					<p>
                             <small>Mateusz Szczap</small><br>
@@ -59,11 +59,11 @@
                 </section>
 
                 <section>
-                    <h2>Fan's view</h2><p>
+                    <h2>Advantages</h2><p>
                     <ul>
                         <li><blockquote>"Functional programming aims to let you more easily write programs that are concise, with fewer bugs and parallelizable."</blockquote></li>
                         <li><blockquote>"Using the Functional style allows code to be written that declares its intent clearly, without being mixed up with control flow statements(...)"</blockquote></li>
-                        <li><blockquote>"Because of the principles like side-effect free programming, it is much easier to reason about code, and check its correctness."</blockquote></li>
+                        <li><blockquote>"Because of the principles like side-effect free programming [mutating state], it is much easier to reason about code, and check its correctness."</blockquote></li>
                     </ul>
                 </section>
 
@@ -79,43 +79,47 @@
 
                 <section>
                     <h2>Sceptic's view</h2>
-                    <blockquote>"There is of course nothing that is possible in functional but not imperative programming (or vice versa)."</blockquote>
+                    <blockquote>"There is of course nothing that is possible in functional but not imperative programming."</blockquote>
                 </section>
 
                 <section>
                     <blockquote>"The point of different programming paradigms isn't to make things possible that weren't possible before, it's to make things easy that were hard before."</blockquote>
+                    <img src="elephant.gif" width="50%" height="50%"><br>
+                    <a href="http://en.wikipedia.org/wiki/Blind_men_and_an_elephant">http://en.wikipedia.org/wiki/Blind_men_and_an_elephant</a>
                 </section>
 
                 <section>
                     <h2>Nothing comes for free...</h2>
                     <ul>
                         <li>investment into learning new paradigm (brain IOPs)</li>
-                        <li>hard to understanding functional jargon (Monoid, Monad, Applicative Functor)?</li>
+                        <li>hard to understanding functional jargon (HOF, RT, Side-Effect Free, Monad, Monoid, Functor or Applicative Functor)?</li>
+                        <li>FP is grounded in Category Theory and lots of people in FP use those academic terms</li>
                         <li>community is divided into practical programmers and academics followers of FP</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>Your Expectations - What I can deliver</h2><p>
-                        <blockquote>"Like OOP learning FP is more like a journey than something you can learn in 1-2 hours."</blockquote>
-                    </ul>
+                    <img src="fp_in_5_mins.jpg" width="30%" height="30%">
+                    <blockquote>"Like OOP learning FP is more like a journey than something you can learn in 1-2 hours."</blockquote>
                 </section>
-
 
                 <section>
                     <h2>FP - declarative example</h2><p>
                     <pre><code>
 final ImmutableList&lt;Person&gt; persons = ImmutableList.of(
-  new Person("Patrick", 'M', 170, 30),
-  new Person("Stefan", 'M', 180, 35),
-  new Person("Julia", 'F', 161, 25)
+    new Person("Patrick", Person.Gender.MALE, 170, 30),
+    new Person("Stefan", Person.Gender.MALE , 180, 35),
+    new Person("Julia", Person.Gender.FEMALE, 161, 25)
 );
 
 persons.stream()
-.filter(p -> p.gender == Person.MALE)
-.mapToDouble(p -> p.height)
-.average()
-.ifPresent(average -> System.out.println(average));
+    .filter(p -> p.getGender() == Person.Gender.MALE)
+    .mapToDouble(p -> p.getHeight())
+    .average()
+    .ifPresent(average -> System.out.println(average));
+--
+175.0
                     </code></pre>
                 </section>
 
@@ -123,15 +127,15 @@ persons.stream()
                     <h2>Imperative example</h2><p>
                     <pre><code>
 final ImmutableList&lt;Person&gt; persons = ImmutableList.of(
-  new Person("Patrick", 'M', 170, 30),
-  new Person("Stefan", 'M', 180, 35),
-  new Person("Julia", 'F', 161, 25)
+  new Person("Patrick", Person.Gender.MALE, 170, 30),
+  new Person("Stefan", Person.Gender.MALE, 180, 35),
+  new Person("Julia", Person.Gender.FEMALE, 161, 25)
 );
 
 double sum = 0.0D;
 for (Person p : persons) {
   if (p.gender == Person.MALE) {
-   sum += p.height;
+   sum += p.getHeight();
   }
 }
 
@@ -174,17 +178,156 @@ System.out.println(avg);
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore</h2>
-                    <p>Esoteric nature of FP lies in language. Let's demystify some terms but - only what makes sense in Java 8 to keep it simple for now.</p>
+                    <h2>FP is Jargon's *Galore</h2>
+                    <p>Esoteric nature of FP lies in cryptic language and jargon. Let's demystify some terms.</p>
+                    <img src="h2.jpg" width="50%" height="50%">
+                    <blockquote>*galore - (EN -> DE) - in Hülle und Fülle</blockquote>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - monomorphic function and polymorphic function</h2>
                 </section>
 
                 <section>
                     <h2>Jargon's Galore - Higher Order Function (HOF)</h2>
-                    <blockquote>"In FP higher order function is a function that either takes a function as a parameter or outputs a function as a return"</blockquote>
+                    <blockquote>"In FP higher order function is a function that either takes a function as a parameter or outputs a function as a return value."</blockquote>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - HOF as an input</h2>
+                    <img src="1_stone.jpg" width="10%" height="10%"><br>
                     <pre>
                         <code>
-public void print(int weight, Function&lt;Integer, String&gt; scale) {
-    System.out.println("Printing : " + scale.apply(weight));
+Function&lt;Double, String&gt; KG_TO_STONES = weight -> String.format("%f stones", weight * 0.157473);
+
+static void printWeight(double weightInKg, Function&gt;Double, String&gt; scale) {
+    System.out.println("Weight: " + scale.apply(weightInKg));
+}
+
+public static void main(String[] args) {
+    printWeight(6.4D, KG_TO_STONES);
+}
+--
+Weight: 1.007827 stones
+                        </code>
+                    </pre>
+                    <blockquote>1 stone = 6.350 kg</blockquote>
+                    <a href="http://en.wikipedia.org/wiki/Stone_%28unit%29">http://en.wikipedia.org/wiki/Stone_%28unit%29</a>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - HOF as an output</h2>
+                    <pre>
+                        <code>
+@FunctionalInterface
+public interface Predicate&lt;T&gt; {
+    boolean test(T t);
+}
+
+Predicate&lt;Person&gt; isAdult() {
+    return p -> p.getAge() > 18;
+}
+
+final ImmutableList&lt;Person&gt; persons = ImmutableList.of(
+    new Person("Patrick", Person.Gender.MALE, 170, 30),
+    new Person("Stefan", Person.Gender.MALE , 180, 17),
+    new Person("Julia", Person.Gender.FEMALE, 161, 25)
+);
+
+persons.stream()
+    .filter(isAdult())
+    .forEach(p -> System.out.printf("Adult person: %s:\n", p));
+---
+Adult person: Person{name='Patrick', height=170, gender=MALE, age=30}:
+Adult person: Person{name='Julia', height=161, gender=FEMALE, age=25}:
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Function Application</h2>
+                    <pre>
+                        <code>
+@Test
+public void testAddOneFunction() {
+    final Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
+
+    Assert.assertEquals(Integer.valueOf(3), addOne.apply(2));
+}
+
+@Test
+public void testSquareFunction() {
+    final Function&lt;Integer, Integer&gt; squareFun = i -> i * i;
+
+    Assert.assertEquals(Integer.valueOf(4), squareFun.apply(2));
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Function Composition - f(g(x))</h2>
+                    <blockquote>"In mathematics, function composition is the pointwise application of one function to the result of another to produce a third function."</blockquote>
+                    <blockquote>"The term "composition of functions" (or "composite function") refers
+                        to the combining of functions in a manner where the output from one function
+                        becomes the input for the next function."</blockquote>
+                </section>
+
+                <section>
+                    <h2>Function Composition - compose</h2>
+                    <pre>
+                        <code>
+java.util.function.Function&lt;T, R&gt;:
+                            
+default &lt;V&gt; Function&lt;V, R&gt; compose(Function&lt;? super V, ? extends T&gt; before) {
+    return (V v) -> apply(before.apply(v));
+}
+                        </code>
+                    </pre>
+                    <pre>
+                        <code>
+@Test
+public void testComposed1() {
+    final Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
+    final Function&lt;Integer, Integer&gt; square = i -> i * i;
+
+    final Function&lt;Integer, Integer&gt; composed = square.compose(addOne);
+
+    final List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
+    .map(composed)
+    .collect(Collectors.toList());
+
+    Assert.assertEquals(Lists.newArrayList(4, 9, 16, 25, 36), ints);
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Function Composition - andThen</h2>
+                    <pre>
+                        <code>
+java.util.function.Function&lt;T, R&gt;:
+
+default &lt;V&gt; Function&lt;T, V&gt; andThen(Function&lt;? super R, ? extends V&gt; after) {
+    return (T t) -> after.apply(apply(t));
+}
+                    </code>
+                    </pre>
+                    <pre>
+                        <code>
+@Test
+public void testComposed2() {
+    final Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
+    final Function&lt;Integer, Integer&gt; square = i -> i * i;
+
+    final Function&lt;Integer, Integer&gt; composed = addOne.andThen(square);
+
+    final List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
+    .map(composed)
+    .collect(Collectors.toList());
+
+    Assert.assertEquals(Lists.newArrayList(4, 9, 16, 25, 36), ints);
 }
                         </code>
                     </pre>
@@ -194,6 +337,100 @@ public void print(int weight, Function&lt;Integer, String&gt; scale) {
                     <h2>Jargon's Galore - Side Effect free programming</h2>
                     <blockquote>"In classical FP a side effect is a situation in which there is a mutation to a state.
                         Classical FP programming operates only on immutable data structures, instead of mutating state, FP programs yield a new state based on old state often using recursion."</blockquote>
+                    <blockquote>"Procedure is often used to refer to a chunk of code with side-effects."</blockquote>
+                </section>
+
+                <section>
+                    <h2>Side-Effect - lenient or strict</h2>
+                    <ul>
+                        <li>PRAGMATICS - lenient - local side effects acceptable</li>
+                        <li>THEORISTS - strict - no side effects acceptable at all</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Side-Effect - lenient example</h2>
+                    <pre>
+                        <code>
+public ImmutableList&lt;Sys&gt; hitCountSys() {
+    final ImmutableList.Builder&lt;Sys&gt; builder = ImmutableList.builder();
+    builder.add(Timer.initial(metricRegistry));
+    builder.add(new Normalizer());
+    builder.add(new DefaultsProcessor());
+    builder.add(new ApiMapper(geo));
+    builder.add(new HitCountSearch(searchService));
+    builder.add(new AsyncProcessor(ImmutableList.of()));
+    builder.add(Timer.checkpoint("ecs.hitCount"));
+
+    return builder.build();
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Side-Effect - strict example</h2>
+                    <pre>
+                        <code>
+public OptionalDouble malesAverageHeight() {
+    return people().stream()
+    .filter(p -> p.getGender() == Person.Gender.MALE)
+    .mapToDouble(p -> p.getHeight())
+    .average();
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Memoization</h2>
+                    <blockquote>"In computing, memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again."</blockquote>
+                </section>
+
+                <section>
+                    <h2>Memoization</h2>
+                    <pre>
+                        <code>
+public final class Memoizer&lt;T, U&gt; {
+
+    private final Map&lt;T, U&gt; cache = new ConcurrentHashMap<>();
+
+    private Memoizer() {}
+
+    private Function&lt;T, U&gt; doMemoize(final Function&lt;T, U&gt; function) {
+        return input -> cache.computeIfAbsent(input, function::apply);
+    }
+
+    public static &lt;T, U&gt; Function&lt;T, U&gt; memoize(final Function&lt;T, &gt; function) {
+        return new Memoizer&lt;T, U&gt;().doMemoize(function);
+    }
+
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Memoization - example</h2>
+                    <pre>
+                        <code>
+@Test
+public void testMemoization() {
+    Function&lt;Integer, Integer&gt; square = x -> x * x;
+    Function&lt;Integer, Integer&gt; memoized = Memoizer.memoize(square);
+
+    assertEquals(Integer.valueOf(100), square.apply(10));
+
+    assertEquals(Integer.valueOf(100), memoized.apply(10));
+    assertEquals(Integer.valueOf(100), memoized.apply(10));
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Jargon's Galore - Memoization - caveats</h2>
+                    <blockquote>"There is a kind of function that may pose a problem: recursive functions that call themselves several times with the same argument may not be memoized this way."</blockquote>
                 </section>
 
                 <section>
@@ -202,15 +439,11 @@ public void print(int weight, Function&lt;Integer, String&gt; scale) {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Memoization</h2>
-                </section>
-
-                <section>
                     <h2>Jargon's Galore - Currying</h2>
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - monomorphic function and polymorphic function</h2>
+                    <h2>Jargon's Galore - Recursion</h2>
                 </section>
 
                 <section>
@@ -220,32 +453,6 @@ public void print(int weight, Function&lt;Integer, String&gt; scale) {
 
                 <section>
                     <h2>Jargon's Galore - Monad</h2>
-                </section>
-
-                <section>
-                    <h2>Strict or Lenient immutability</h2>
-                    <ul>
-                        <li>lenient - local side effects acceptable</li>
-                        <li>strict - no side effects acceptable at all</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>Strict or Lenient immutability</h2>
-                    <p>
-                        Programming fully in a n
-                    </p>
-                    <p>Explain here that there are some schools which allow mutability within method level</p>
-                </section>
-
-                <section>
-                    <h2>Strict immutability - recursion</h2>
-                    <p>Explain here that there are some schools which allow mutability within method level</p>
-                </section>
-
-                <section>
-                    <h2>Lending mutable objects so that it is constrained (rust).</h2>
-                    <p>Explain here that there are some schools which allow mutability within method level</p>
                 </section>
 
                 <section>

@@ -63,7 +63,7 @@ public class Stream2Test {
 
     @Test
     public void testPartitioning() {
-        final Map<Boolean, List<Person>> peopleByMaturity = people().stream().collect(Collectors.partitioningBy(p -> p.getAge() >==] 18));
+        final Map<Boolean, List<Person>> peopleByMaturity = people().stream().collect(Collectors.partitioningBy(p -> p.getAge() >= 18));
 
         final ImmutableMap<Boolean, ImmutableList<Object>> expectedPeopleByGender = ImmutableMap.of(
                 Boolean.TRUE, ImmutableList.of(patrick(), julia()),

@@ -19,6 +19,10 @@ public class Person {
         this.address = address;
     }
 
+    public Person(String name, Gender gender, int height, int age) {
+        this(name, gender, height, age, Optional.<Address>empty());
+    }
+
     public String getName() {
         return name;
     }
@@ -94,8 +98,6 @@ public class Person {
         public int getPostCode() {
             return postCode;
         }
-
-
 
     }
 
