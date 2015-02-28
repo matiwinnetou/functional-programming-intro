@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class StreamTest {
@@ -57,34 +58,15 @@ public class StreamTest {
     }
 
     @Test
-    public void testFibonacciFinite_With_Filter() {
-        final long sum = FibonacciIntGenerator.finiteStream(i -> i <= 1_000_000)
-                .filter(i -> i % 2 == 0)
-                .sum();
+    public void testFibonacciInfinite_WithPeek() {
+        final IntStream intStream = FibonacciIterator.infiniteStream();
 
-        Assert.assertEquals("sum should be 1089154", 1089154, sum);
-    }
-
-    @Test
-    public void testFibonacciInfinite_WithPeekAndMap() {
-        final long sum = FibonacciIntGenerator.infiniteStream()
-                .peek(i -> System.out.println(String.format("original: %d", i)))
-                .map(i -> i * 2)
-                .limit(10)
-                .peek(i -> System.out.println(String.format("square: %d", i)))
-                .sum();
-
-        Assert.assertEquals("sum should be 462", 462, sum);
-    }
-
-    @Test
-    public void testFlatMap() {
-        final long sum = FibonacciIntGenerator.finiteStream(i -> i < 10)
-                .flatMap(i -> FibonacciIntGenerator.finiteStream(j -> i + j < 20))
+        final long sum = intStream
+                .peek(i -> System.out.println(i))
                 .limit(10)
                 .sum();
 
-        Assert.assertEquals("sum should be 59", 59, sum);
+        Assert.assertEquals(231, sum);
     }
 
     @Test
@@ -93,15 +75,14 @@ public class StreamTest {
                 .filter(str -> str.length() > 1)
                 .findAny();
 
-        final Optional<Integer> intOpt = strOpt
-                .map(str -> str.trim())
+        final Optional<Integer> maybeInt = strOpt
+                .map(String::trim)
                 .map(str -> str.length());
 
-        Assert.assertEquals("should be 2", 2, intOpt.get().intValue());
+        Assert.assertEquals("should be 2", 2, maybeInt.get().intValue());
     }
 
     @Test
-    //fold
     public void testReduceWithProduct() {
         final long result = Stream.of(1, 2, 3)
                 .filter(i -> i >= 2)

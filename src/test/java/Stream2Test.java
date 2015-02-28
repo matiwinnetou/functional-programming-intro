@@ -53,7 +53,7 @@ public class Stream2Test {
     public void testGrouping() {
         final Map<Person.Gender, List<Person>> peopleByGender = people().stream().collect(Collectors.groupingBy(t -> t.getGender()));
 
-        final ImmutableMap<Person.Gender, ImmutableList<Object>> expectedPeopleByGender = ImmutableMap.of(
+        final ImmutableMap<Person.Gender, ImmutableList<Person>> expectedPeopleByGender = ImmutableMap.of(
                 Person.Gender.MALE, ImmutableList.of(patrick(), stefan()),
                 Person.Gender.FEMALE, ImmutableList.of(julia())
         );
@@ -79,12 +79,14 @@ public class Stream2Test {
     }
 
     private Integer reduceAge(final ImmutableList<Person> people, final Monoid<Integer> monoid) {
-        return fold(people, p -> p.getAge(), monoid);
+        return reduce(people, p -> p.getAge(), monoid);
     }
 
-    //polymorphic java fold with a monoid
-    private <T> T fold(final ImmutableList<Person> people, final Function<Person, T> mapping, final Monoid<T> monoid) {
-        return people.stream().map(mapping).reduce(monoid.zero(), monoid.operation());
+    //polymorphic java reduce with a monoid
+    private <T> T reduce(final ImmutableList<Person> people, final Function<Person, T> mapping, final Monoid<T> monoid) {
+        return people.stream()
+                .map(mapping)
+                .reduce(monoid.zero(), monoid.operation());
     }
 
     private ImmutableList<Person> people() {
