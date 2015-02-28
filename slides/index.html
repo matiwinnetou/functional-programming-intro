@@ -543,8 +543,56 @@ public void testMemoization() {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Referential Transparency (RT)</h2>
-                    <blockquote>"Referential transparency is one of the principles of functional programming; only referentially transparent functions can be memoized (transformed into equivalent functions which cache results). Some programming languages provide means to guarantee referential transparency."</blockquote>
+                    <h2>Streams - generate</h2>
+                    <blockquote>"A continuous flow of data."</blockquote>
+                    <pre>
+                        <code>
+@Test
+public void testGenerateSequenceOnes() {
+    final List&lt;Integer&gt; ints = Stream.generate(() -> 1)
+        .limit(10)
+        .collect(Collectors.toList());
+
+    Assert.assertEquals(Lists.newArrayList(1,1,1,1,1,1,1,1,1,1), ints);
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Streams - iterate</h2>
+                    <pre>
+                        <code>
+@Test
+public void testGenerateSequenceInc() {
+    final List&lt;Integer&gt; ints = Stream.iterate(0, i -> i + 1)
+    .limit(10)
+    .collect(Collectors.toList());
+
+    Assert.assertEquals(Lists.newArrayList(0,1,2,3,4,5,6,7,8,9), ints);
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Streams - concat</h2>
+                    <pre>
+                        <code>
+@Test
+public void testConcat() {
+    final Stream&lt;Integer&gt; r1 = Stream.of(1, 2, 3);
+    final Stream&lt;Integer&gt; r2 = Stream.of(3, 4, 5);
+
+    final List&lt;Integer&gt; collect = Stream.concat(r1, r2)
+        .distinct()
+        .sorted(Comparator.reverseOrder())
+        .collect(Collectors.toList());
+
+    Assert.assertEquals(ImmutableList.of(5, 4, 3, 2, 1), collect);
+}
+                        </code>
+                    </pre>
                 </section>
 
                 <section>

@@ -14,29 +14,33 @@ public class StreamTest {
 
     @Test
     public void testGenerateSequenceOnes() {
-        final long count = Stream.generate(() -> 1)
-                .limit(100)
-                .count();
+        final List<Integer> ints = Stream.generate(() -> 1)
+                .limit(10)
+                .collect(Collectors.toList());
 
-        Assert.assertEquals("count should be 100", 100, count);
+        Assert.assertEquals(Lists.newArrayList(1,1,1,1,1,1,1,1,1,1), ints);
     }
 
     @Test
     public void testGenerateSequenceInc() {
-        final long count = Stream.iterate(0, i -> i + 1)
-                .limit(100)
-                .count();
+        final List<Integer> ints = Stream.iterate(0, i -> i + 1)
+                .limit(10)
+                .collect(Collectors.toList());
 
-        Assert.assertEquals("count should be 100", 100, count);
+        Assert.assertEquals(Lists.newArrayList(0,1,2,3,4,5,6,7,8,9), ints);
     }
 
     @Test
-    public void testGenerateSequence() {
-        final long count = Stream.iterate(0, i -> i + 1)
-                .limit(100)
-                .count();
+    public void testConcat() {
+        final Stream<Integer> r1 = Stream.of(1, 2, 3);
+        final Stream<Integer> r2 = Stream.of(3, 4, 5);
 
-        Assert.assertEquals("count should be 100", 100, count);
+        final List<Integer> collect = Stream.concat(r1, r2)
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(ImmutableList.of(5, 4, 3, 2, 1), collect);
     }
 
     @Test
@@ -49,7 +53,7 @@ public class StreamTest {
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
 
-        Assert.assertEquals("result should be 6", ImmutableList.of(5, 4, 3, 2, 1), collect);
+        Assert.assertEquals(ImmutableList.of(5, 4, 3, 2, 1), collect);
     }
 
     @Test
