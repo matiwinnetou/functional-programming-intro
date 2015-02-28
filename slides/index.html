@@ -371,6 +371,18 @@ public static void withResource(Consumer&lt;Resource&gt; consumer) {
                 </section>
 
                 <section>
+                    <h2>Default Methods - Virtual Extension Methods</h2>
+                    <blockquote>"Default methods enable you to add new functionality to the interfaces of your libraries and ensure binary compatibility with code written for older versions of those interfaces."</blockquote>
+                    <pre>
+                        <code>
+List&lt;Person&gt; people = people();
+people.forEach(p -> System.out.println(p));
+                        </code>
+                    </pre>
+                    <p>Interfaces in Java can now implement methods. The benefit that default methods bring is that now it’s possible to add a new default method to the interface and it doesn’t break the implementations.</p>
+                </section>
+
+                <section>
                     <h2>Function Composition - compose</h2>
                     <pre>
                         <code>
@@ -535,19 +547,6 @@ public void testMemoization() {
                     <blockquote>"Referential transparency is one of the principles of functional programming; only referentially transparent functions can be memoized (transformed into equivalent functions which cache results). Some programming languages provide means to guarantee referential transparency."</blockquote>
                 </section>
 
-
-                <section>
-                    <h2>Jargon's Galore - Functor (functional objects)</h2>
-                    <blockquote>"By analogy to OOP - functor is an object with a function defined, very similar to strategy pattern."</blockquote>
-                    <pre>
-                        <code>
-public interface Functor&lt;A,F&gt; {
-    F map(Function&lt;A,B&gt; fun);
-}
-                        </code>
-                    </pre>
-                </section>
-
                 <section>
                     <h2>Jargon's Galore - Currying</h2>
                 </section>
@@ -642,7 +641,73 @@ public void testStringMonoid() {
                 </section>
 
                 <section>
+                    <h2>Jargon's Galore - Functor (functional objects)</h2>
+                    <blockquote>"By analogy to OOP - functor is an object with a function defined, very similar to strategy pattern."</blockquote>
+                    <pre>
+                        <code>
+public interface Functor&lt;A,B extends Functor&lt;?,?&gt;&gt; {
+    B map(Function&lt;A,B&gt; fun);
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
                     <h2>Jargon's Galore - Monad</h2>
+                    <ul>
+                        <li>Monads are container types</li>
+                        <li>Monads Support Higher Order Functions</li>
+                        <li>Monads are Combinable</li>
+                        <li>Monads Can Be Built In Different Ways</li>
+                    </ul>
+                    <br>
+                    <br>
+                    <a href="http://james-iry.blogspot.de/2007/09/monads-are-elephants-part-1.html">http://james-iry.blogspot.de/2007/09/monads-are-elephants-part-1.html</a>
+                </section>
+
+                <section>
+                    <h2>Monad by example</h2>
+                    <pre>
+                        <code>
+public interface Monad&lt;A,B extends Monad&lt;?,?&gt;&gt; extends Functor&lt;A,B&gt; {
+    B flatMap(Function&lt;A,B&gt; fun);
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Monad by example - Maybe</h2>
+                    <pre>
+                        <code>
+public class Maybe&lt;A&gt; implements Monad&lt;A,Maybe&lt;?&gt;&gt; {
+
+    private final A a;
+
+    private Maybe(A a) {
+        this.a = a;
+    }
+
+    public &lt;B&gt; Maybe&lt;B&gt; map(Function&lt;A,B&gt; fun) {
+       return a == null ? return nothing() : just(fun.apply(a))
+    }
+
+    public &lt;B&gt; Maybe&lt;B&gt; flatMap(Function&lt;,Maybe&lt;?&gt;&gt; fun) {
+        if (a == null) return nothing();
+        else return (Maybe&lt;B&gt;)fun.apply(a);
+    }
+
+    public static &lt;A&gt; Maybe&lt;A&gt; just(A a) {
+        return new Maybe&lt;A&gt;(a);
+    }
+
+    public static &lt;A&gt; Maybe&lt;A&gt; nothing() {
+        return new Maybe&lt;&gt;(null);
+    }
+
+}
+                        </code>
+                    </pre>
                 </section>
 
                 <section>
