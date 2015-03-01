@@ -194,7 +194,7 @@ System.out.println(avg);
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Monoid</h2>
+                    <h2>Monoid</h2>
                     <blockquote>"A monoid is an algebraic structure with a single associative binary operation and an identity element."</blockquote>
                 </section>
 
@@ -254,7 +254,7 @@ public void testStringMonoid() {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - monomorphic function and polymorphic function</h2>
+                    <h2>Monomorphic Function and Polymorphic Function</h2>
                     <ul>
                         <li><blockquote>"Monomorphic functions are functions that operate on one type of data only."</blockquote></li>
                         <li><blockquote>"Polymorphic functions are functions that work on any data type."</blockquote></li>
@@ -302,12 +302,12 @@ private &lt;T&gt; T reduce(final Function&lt;Person, T&gt; mapping, final Monoid
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Higher Order Function (HOF)</h2>
+                    <h2>Higher Order Function (HOF)</h2>
                     <blockquote>"In FP higher order function is a function that either takes a function as a parameter or outputs a function as a return value."</blockquote>
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - HOF as an input</h2>
+                    <h2>HOF as an input</h2>
                     <pre>
                         <code>
 Function&lt;Double, String&gt; KG_TO_STONES = weight -> String.format("%f stones", weight * 0.157473);
@@ -344,7 +344,7 @@ public interface Predicate&lt;T&gt; {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - HOF as an output</h2>
+                    <h2>HOF as an output</h2>
                     <pre>
                         <code>
 Predicate&lt;Person&gt; isAdult() {
@@ -368,7 +368,7 @@ Adult person: Person{name='Julia', height=161, gender=FEMALE, age=25}:
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Function Application</h2>
+                    <h2>Function Application</h2>
                     <pre>
                         <code>
 @Test
@@ -470,7 +470,7 @@ people.forEach(p -> System.out.println(p));
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Function Composition - f(g(x))</h2>
+                    <h2>Function Composition - f(g(x))</h2>
                     <blockquote>"In mathematics, function composition is the pointwise application of one function to the result of another to produce a third function."</blockquote>
                     <blockquote>"The term "composition of functions" (or "composite function") refers
                         to the combining of functions in a manner where the output from one function
@@ -538,10 +538,14 @@ public void testComposed2() {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Side Effect free programming</h2>
+                    <h2>Side Effect free programming</h2>
                     <blockquote>"In classical FP a side effect is a situation in which there is a mutation to a state.
                         Classical FP programming operates only on immutable data structures, instead of mutating state, FP programs yield a new state based on old state often using recursion."</blockquote>
                     <blockquote>"Procedure is often used to refer to a chunk of code with side-effects."</blockquote>
+                </section>
+
+                <section>
+                    <h2>Are Exceptions a new GOTO?</h2>
                 </section>
 
                 <section>
@@ -597,7 +601,7 @@ public OptionalDouble malesAverageHeight() {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Memoization</h2>
+                    <h2>Memoization</h2>
                     <blockquote>"In computing, memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again."</blockquote>
                 </section>
 
@@ -643,7 +647,7 @@ public void testMemoization() {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Memoization - caveats</h2>
+                    <h2>Memoization - caveats</h2>
                     <blockquote>"There is a kind of function that may pose a problem: recursive functions that call themselves several times with the same argument may not be memoized this way."</blockquote>
                 </section>
 
@@ -759,20 +763,16 @@ public class FibonacciIterator implements PrimitiveIterator.OfInt {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Currying</h2>
+                    <h2>Currying</h2>
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Persistent Collections</h2>
+                    <h2>Reductions</h2>
+                    <blockquote>In spirit of side-effect free programming a lot of traditional computations with loops mutating state can be achieved using "reductions".</blockquote>
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Folds/Reductions</h2>
-                    <blockquote>In spirit of side-effect free programming a lot of traditional computations with loops mutating state can be achieved using "reductions/folds".</blockquote>
-                </section>
-
-                <section>
-                    <h2>Jargon's Galore - Folds/Reductions</h2>
+                    <h2>Folds/Reductions</h2>
                     <pre>
                         <code>
 private static ImmutableList&lt;Person&gt; people() {
@@ -936,7 +936,7 @@ public void testPartitioning() {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Functor (functional objects)</h2>
+                    <h2>Functor (functional objects)</h2>
                     <blockquote>"By analogy to OOP - functor is an object with a function defined, very similar to strategy pattern."</blockquote>
                     <pre>
                         <code>
@@ -948,7 +948,7 @@ public interface Functor&lt;A,B extends Functor&lt;?,?&gt;&gt; {
                 </section>
 
                 <section>
-                    <h2>Jargon's Galore - Monad</h2>
+                    <h2>Monad</h2>
                     <ul>
                         <li>Monads are container types</li>
                         <li>Monads Support Higher Order Functions</li>
