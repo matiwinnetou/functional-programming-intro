@@ -63,8 +63,9 @@
                     <ul>
                         <li><blockquote>"Functional programming aims to let you more easily write programs that are concise, with fewer bugs and parallelizable."</blockquote></li>
                         <li><blockquote>"Using the Functional style allows code to be written that declares its intent clearly, without being mixed up with control flow statements(...)"</blockquote></li>
-                        <li><blockquote>"Because of the principles like side-effect free programming [mutating state], it is much easier to reason about code, and check its correctness."</blockquote></li>
+                        <li><blockquote>"Because of the principles like side-effect free programming [mutating state], it is much easier to reason about code, and check it's correctness."</blockquote></li>
                     </ul>
+                    <p>Helps to concisely transform data from A to B (e.g. JSON to domain object)</p>
                 </section>
 
                 <section>
@@ -83,7 +84,9 @@
                 </section>
 
                 <section>
+                    <h2>What is the point of all of this?</h2>
                     <blockquote>"The point of different programming paradigms isn't to make things possible that weren't possible before, it's to make things easy that were hard before."</blockquote>
+                    <blockquote>"Imperative and functional programming are not opposites, FP is just simply programming without Side-Effects."</blockquote>
                 </section>
 
                 <section>
@@ -135,7 +138,7 @@ persons.stream()
                 <section>
                     <h2>Imperative example</h2><p>
                     <pre><code>
-final ImmutableList&lt;Person&gt; persons = ImmutableList.of(
+ImmutableList&lt;Person&gt; persons = ImmutableList.of(
   new Person("Patrick", Person.Gender.MALE, 170, 30),
   new Person("Stefan", Person.Gender.MALE, 180, 35),
   new Person("Julia", Person.Gender.FEMALE, 161, 25)
@@ -235,15 +238,15 @@ public class StringMonoid implements Monoid&lt;String&gt; {
                     <pre>
                         <code>
 private static ImmutableList&lt;Person&gt; people() {
-    final Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
-    final Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
+    Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
+    Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
 
     return ImmutableList.of(p1, p2);
 }
 
 @Test
 public void testStringMonoid() {
-    final String reduced = people().stream()
+    String reduced = people().stream()
         .map(p -> p.getName())
         .reduce(StringMonoid.INSTANCE.zero(), StringMonoid.INSTANCE.operation());
 
@@ -266,8 +269,8 @@ public void testStringMonoid() {
                     <pre>
                         <code>
 private static ImmutableList&lt;Person&gt; people() {
-    final Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
-    final Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
+    Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
+    Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
 
     return ImmutableList.of(p1, p2);
 }
@@ -286,13 +289,13 @@ public Optional&lt;Person&gt; findAdult() {
                     <pre>
                         <code>
 private static ImmutableList&lt;Person&gt; people() {
-    final Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
-    final Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
+    Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
+    Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
 
     return ImmutableList.of(p1, p2);
 }
 
-private &lt;T&gt; T reduce(final Function&lt;Person, T&gt; mapping, final Monoid&lt;T&gt; monoid) {
+private &lt;T&gt; T reduce(Function&lt;Person, T&gt; mapping, Monoid&lt;T&gt; monoid) {
     return people().stream()
     .map(mapping)
     .reduce(monoid.zero(), monoid.operation());
@@ -351,7 +354,7 @@ Predicate&lt;Person&gt; isAdult() {
     return p -> p.getAge() &gt;= 18;
 }
 
-final ImmutableList&lt;Person&gt; persons = ImmutableList.of(
+ImmutableList&lt;Person&gt; persons = ImmutableList.of(
     new Person("Patrick", Person.Gender.MALE, 170, 30),
     new Person("Stefan", Person.Gender.MALE , 180, 17),
     new Person("Julia", Person.Gender.FEMALE, 161, 25)
@@ -373,14 +376,14 @@ Adult person: Person{name='Julia', height=161, gender=FEMALE, age=25}:
                         <code>
 @Test
 public void testAddOneFunction() {
-    final Function&lt;Integer, Integer&gt; addOne = i -&gt; i + 1;
+    Function&lt;Integer, Integer&gt; addOne = i -&gt; i + 1;
 
     Assert.assertEquals(Integer.valueOf(3), addOne.apply(2));
 }
 
 @Test
 public void testSquareFunction() {
-    final Function&lt;Integer, Integer&gt; squareFun = i -> i * i;
+    Function&lt;Integer, Integer&gt; squareFun = i -> i * i;
 
     Assert.assertEquals(Integer.valueOf(4), squareFun.apply(2));
 }
@@ -414,7 +417,7 @@ public class Resource {
                     <h2>Loan Pattern - 2</h2>
                     <pre>
                         <code>
-final Resource resource = new Resource();
+Resource resource = new Resource();
 try {
     resource.operate();
 } finally {
@@ -492,14 +495,14 @@ default &lt;V&gt; Function&lt;V, R&gt; compose(Function&lt;? super V, ? extends 
                         <code>
 @Test
 public void testComposed1() {
-    final Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
-    final Function&lt;Integer, Integer&gt; square = i -> i * i;
+    Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
+    Function&lt;Integer, Integer&gt; square = i -> i * i;
 
-    final Function&lt;Integer, Integer&gt; composed = square.compose(addOne);
+    Function&lt;Integer, Integer&gt; composed = square.compose(addOne);
 
-    final List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
-    .map(composed)
-    .collect(Collectors.toList());
+    List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
+      .map(composed)
+      .collect(Collectors.toList());
 
     Assert.assertEquals(Lists.newArrayList(4, 9, 16, 25, 36), ints);
 }
@@ -522,14 +525,14 @@ default &lt;V&gt; Function&lt;T, V&gt; andThen(Function&lt;? super R, ? extends 
                         <code>
 @Test
 public void testComposed2() {
-    final Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
-    final Function&lt;Integer, Integer&gt; square = i -> i * i;
+    Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
+    Function&lt;Integer, Integer&gt; square = i -> i * i;
 
-    final Function&lt;Integer, Integer&gt; composed = addOne.andThen(square);
+    Function&lt;Integer, Integer&gt; composed = addOne.andThen(square);
 
-    final List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
-    .map(composed)
-    .collect(Collectors.toList());
+    List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
+      .map(composed)
+      .collect(Collectors.toList());
 
     Assert.assertEquals(Lists.newArrayList(4, 9, 16, 25, 36), ints);
 }
@@ -545,10 +548,6 @@ public void testComposed2() {
                 </section>
 
                 <section>
-                    <h2>Are Exceptions a new GOTO?</h2>
-                </section>
-
-                <section>
                     <h2>Side-Effect - lenient or strict</h2>
                     <ul>
                         <li>PRAGMATICS - lenient - local side effects acceptable</li>
@@ -561,7 +560,7 @@ public void testComposed2() {
                     <pre>
                         <code>
 public ImmutableList&lt;Sys&gt; hitCountSys() {
-    final ImmutableList.Builder&lt;Sys&gt; builder = ImmutableList.builder();
+    ImmutableList.Builder&lt;Sys&gt; builder = ImmutableList.builder();
     builder.add(Timer.initial(metricRegistry));
     builder.add(new Normalizer());
     builder.add(new DefaultsProcessor());
@@ -595,18 +594,50 @@ public OptionalDouble malesAverageHeight() {
                     <ul>
                         <li>easier to reason about the immutable code</li>
                         <li>thread safe by default</li>
-                        <li>to concisely transform data from A to B (e.g. JSON to domain object) </li>
                     </ul>
-                    
                 </section>
 
                 <section>
-                    <h2>Memoization</h2>
+                    <h2>Are Exceptions a new GOTO?</h2>
+                    <ul>
+                        <li>Exceptions are invisible in source code - there is no way to see which exceptions might be thrown and from where</li>
+                        <li>They create too many possible exit points for a function - correct code requires you to think about every possible path through your function</li>
+                        <li>Throwing exception is a side-effect</li>
+                        <li>Exceptions should be used only for error handling and not control flow</li>
+                        <li>Exceptions are not type safe</li>
+                    </ul>
+                    <br>
+                    <br>
+                    <p>Joel Spolsky on Exceptions as new GOTO:</p>
+                    <a href="http://www.joelonsoftware.com/items/2003/10/13.html">http://www.joelonsoftware.com/items/2003/10/13.html</a>
+                </section>
+
+                <section>
+                    <h2>Checked vs Unchecked exceptions</h2>
+                    <blockquote>"If you still believe in Checked Exceptions, please come to me after lecture for a therapy." - Eric Meijer.</blockquote>
+                    <ul>
+                        <li>(+) Checked exceptions are quasi-type safe</li>
+                        <li>(-) Checked exceptions don't work for Java8 Higher Order Functions - which Checked Exception would you throw?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Exception alternatives</h2>
+                    <ul>
+                        <li>Optional Monad - maybe value</li>
+                        <li>Try Monad - maybe value with possible exception</li>
+                    </ul>
+                    <p>Optional Monad is present in Java 8, Try Monad as a library</p>
+                    <a href="https://github.com/lambdista/try">https://github.com/lambdista/try</a>
+                </section>
+
+                <section>
+                    <h2>Memoization - Part 1</h2>
                     <blockquote>"In computing, memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again."</blockquote>
                 </section>
 
                 <section>
-                    <h2>Memoization</h2>
+                    <h2>Memoization -  Part 2</h2>
                     <pre>
                         <code>
 public final class Memoizer&lt;T, U&gt; {
@@ -615,11 +646,11 @@ public final class Memoizer&lt;T, U&gt; {
 
     private Memoizer() {}
 
-    private Function&lt;T, U&gt; doMemoize(final Function&lt;T, U&gt; function) {
+    private Function&lt;T, U&gt; doMemoize(Function&lt;T, U&gt; function) {
         return input -> cache.computeIfAbsent(input, function::apply);
     }
 
-    public static &lt;T, U&gt; Function&lt;T, U&gt; memoize(final Function&lt;T, &gt; function) {
+    public static &lt;T, U&gt; Function&lt;T, U&gt; memoize(Function&lt;T, &gt; function) {
         return new Memoizer&lt;T, U&gt;().doMemoize(function);
     }
 
@@ -658,7 +689,7 @@ public void testMemoization() {
                         <code>
 @Test
 public void testGenerateSequenceOnes() {
-    final List&lt;Integer&gt; ints = Stream.generate(() -> 1)
+    List&lt;Integer&gt; ints = Stream.generate(() -> 1)
         .limit(10)
         .collect(Collectors.toList());
 
@@ -674,9 +705,9 @@ public void testGenerateSequenceOnes() {
                         <code>
 @Test
 public void testGenerateSequenceInc() {
-    final List&lt;Integer&gt; ints = Stream.iterate(0, i -> i + 1)
-    .limit(10)
-    .collect(Collectors.toList());
+    List&lt;Integer&gt; ints = Stream.iterate(0, i -> i + 1)
+      .limit(10)
+      .collect(Collectors.toList());
 
     Assert.assertEquals(Lists.newArrayList(0,1,2,3,4,5,6,7,8,9), ints);
 }
@@ -690,10 +721,10 @@ public void testGenerateSequenceInc() {
                         <code>
 @Test
 public void testConcat() {
-    final Stream&lt;Integer&gt; r1 = Stream.of(1, 2, 3);
-    final Stream&lt;Integer&gt; r2 = Stream.of(3, 4, 5);
+    Stream&lt;Integer&gt; r1 = Stream.of(1, 2, 3);
+    Stream&lt;Integer&gt; r2 = Stream.of(3, 4, 5);
 
-    final List&lt;Integer&gt; collect = Stream.concat(r1, r2)
+    List&lt;Integer&gt; collect = Stream.concat(r1, r2)
         .distinct()
         .sorted(Comparator.reverseOrder())
         .collect(Collectors.toList());
@@ -710,9 +741,9 @@ public void testConcat() {
                         <code>
 @Test
 public void testFibonacciInfinite_WithPeek() {
-    final IntStream intStream = FibonacciIterator.infiniteStream();
+    IntStream intStream = FibonacciIterator.infiniteStream();
 
-    final long sum = intStream
+    long sum = intStream
         .peek(i -> System.out.println(i))
         .limit(10)
         .sum();
@@ -747,7 +778,7 @@ public class FibonacciIterator implements PrimitiveIterator.OfInt {
     }
 
     public static IntStream infiniteStream() {
-        final Spliterator.OfInt spliterator = Spliterators.spliteratorUnknownSize(new FibonacciIterator(), Spliterator.ORDERED);
+        Spliterator.OfInt spliterator = Spliterators.spliteratorUnknownSize(new FibonacciIterator(), Spliterator.ORDERED);
 
         return StreamSupport.intStream(spliterator, false);
     }
@@ -763,7 +794,54 @@ public class FibonacciIterator implements PrimitiveIterator.OfInt {
                 </section>
 
                 <section>
-                    <h2>Currying</h2>
+                    <h2>Curry(ing)</h2>
+                    <blockquote>"Currying is when you break down a function that takes multiple arguments into a series of functions that take part of the arguments."</blockquote>
+                    <img src="curry.jpg" width="30%" height="30%">
+                    <blockquote>"This is named after Mathematican Haskell Curry, who discovered the principle. It was independently discovered earlier by Moses Schoenfinkel but Schoenfinkelization didn't catch on."</blockquote>
+                </section>
+
+                <section>
+                    <h2>Currying -  In Java and Scala</h2>
+                    <pre>
+                        <code>
+public class Curry {
+
+    //def curry[A,B,C](f: (A, B) => C): A => B => C = a => b => f(a, b)
+    public static &lt;A,B,C&gt; Function&lt;A, Function&lt;B, C&gt;&gt; curry(BiFunction&lt;A,B,C&gt; fun) {
+        return a -> b -> fun.apply(a, b);
+    }
+
+    //def uncurry[A,B,C](f: A => B => C): (A, B) => C = (a, b) => f(a)(b)
+    public static &lt;A,B,C&gt; BiFunction&lt;A,B,C&gt; uncurry(Function&lt;A, Function&lt;B, C&gt;&gt; fun) {
+        return (a, b) -> fun.apply(a).apply(b);
+    }
+
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Currying - Concrete Example</h2>
+                    <pre>
+                        <code>
+@Test
+public void curryAdderTest() {
+    BiFunction&lt;Integer, Integer, Integer&gt; adder = (a, b) -&gt; a + b;
+    Integer normal = adder.apply(1, 2);
+
+    assertEquals(Integer.valueOf(3), normal);
+
+    Function&lt;Integer, Function&lt;Integer, Integer&gt;&gt; curriedFun = Curry.curry(adder);
+    Function&lt;Integer, Integer&gt; fun = curriedFun.apply(1);
+    Integer applied = fun.apply(2);
+
+    assertEquals(Integer.valueOf(3), applied);
+}
+                        </code>
+                    </pre>
+                    <p>Practical examples? - unit conversion</p>
+                    <a href="http://www.esynergy-solutions.co.uk/blog/content/currying-java-8">http://www.esynergy-solutions.co.uk/blog/content/currying-java-8</a>
                 </section>
 
                 <section>
@@ -776,13 +854,13 @@ public class FibonacciIterator implements PrimitiveIterator.OfInt {
                     <pre>
                         <code>
 private static ImmutableList&lt;Person&gt; people() {
-    final Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
-    final Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
+    Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
+    Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
 
     return ImmutableList.of(p1, p2);
 }
 
-final Integer totalAge = people().values().stream()
+Integer totalAge = people().values().stream()
     .map(Person::getAge) // p -> p.getAge()
     .reduce(0, (age1, age2) -> age1 + age2);
 --
@@ -797,7 +875,7 @@ final Integer totalAge = people().values().stream()
                         <code>
 @Test
 public void testReduceWithProduct() {
-    final long result = Stream.of(1, 2, 3)
+    long result = Stream.of(1, 2, 3)
         .filter(i -> i >= 2)
         .reduce(1, (prev, next) -> prev * next);
 
@@ -811,19 +889,19 @@ public void testReduceWithProduct() {
                     <h2>Monoid based reduction</h2>
                     <pre>
                         <code>
-private &lt;T&gt; T reduce(final Function&lt;Person, T&gt; mapping, final Monoid&lt;T&gt monoid) {
+private &lt;T&gt; T reduce(Function&lt;Person, T&gt; mapping, Monoid&lt;T&gt monoid) {
     return people().stream()
         .map(mapping)
         .reduce(monoid.zero(), monoid.operation());
 }
 
-private Integer reduceAge(final ImmutableList&lt;Person&gt; people, final Monoid&lt;Integer&gt; monoid) {
+private Integer reduceAge(ImmutableList&lt;Person&gt; people, Monoid&lt;Integer&gt; monoid) {
     return reduce(people, p -> p.getAge(), monoid);
 }
 
 @Test
     public void testAdditionMonoid() {
-    final int reduced = reduceAge(people(), Monoid.ADDITION_INT_MONOID);
+    int reduced = reduceAge(people(), Monoid.ADDITION_INT_MONOID);
 
     assertEquals(72, reduced);
 }
@@ -884,12 +962,12 @@ public class ImmutableListCollector&lt;T&gt; implements Collector&lt;T, Immutabl
                         <code>
 @Test(expected = UnsupportedOperationException.class)
     public void testOwnCollector() {
-    final ImmutableList&lt;String&gt; collect = Stream
+    ImmutableList&lt;String&gt; collect = Stream
         .generate(() -> UUID.randomUUID().toString())
         .limit(100)
         .collect(new ImmutableListCollector<>());
 
-    collect.add("1");
+    collect.add("1"); //BOOOOM
 }
                         </code>
                     </pre>
@@ -901,10 +979,10 @@ public class ImmutableListCollector&lt;T&gt; implements Collector&lt;T, Immutabl
                         <code>
 @Test
 public void testGrouping() {
-    final Map&lt;Person.Gender, List&lt;Person&gt;&gt; peopleByGender = people().stream()
+    Map&lt;Person.Gender, List&lt;Person&gt;&gt; peopleByGender = people().stream()
         .collect(Collectors.groupingBy(t -> t.getGender()));
 
-    final ImmutableMap&lt;Person.Gender, ImmutableList&lt;Person&gt;&gt; expectedPeopleByGender = ImmutableMap.of(
+    ImmutableMap&lt;Person.Gender, ImmutableList&lt;Person&gt;&gt; expectedPeopleByGender = ImmutableMap.of(
         Person.Gender.MALE, ImmutableList.of(patrick(), stefan()),
         Person.Gender.FEMALE, ImmutableList.of(julia())
     );
@@ -921,10 +999,10 @@ public void testGrouping() {
                         <code>
 @Test
 public void testPartitioning() {
-    final Map&lt;Boolean, List&lt;Person&gt;&gt; peopleByMaturity = people().stream()
+    Map&lt;Boolean, List&lt;Person&gt;&gt; peopleByMaturity = people().stream()
         .collect(Collectors.partitioningBy(p -> p.getAge() >= 18));
 
-    final ImmutableMap&lt;Boolean, ImmutableList&lt;Person&gt;&gt; expectedPeopleByGender = ImmutableMap.of(
+    ImmutableMap&lt;Boolean, ImmutableList&lt;Person&gt;&gt; expectedPeopleByGender = ImmutableMap.of(
         Boolean.TRUE, ImmutableList.of(patrick(), julia()),
         Boolean.FALSE, ImmutableList.of(stefan())
     );
@@ -1062,7 +1140,7 @@ public class Maybe&lt;A&gt; implements Monad&lt;A,Maybe&lt;?&gt;&gt; {
                         <li>Tail recursion</li>
                         <li>value types - case classes</li>
                         <li>standard functional methods like zip, takeWhile, etc, try [JOOL] - https://github.com/jOOQ/jOOL</li>
-                        <li>limited monads in standard library</li>
+                        <li>limited monads in standard library, e.g. lack of Try Monad</li>
                     </ul>
                 </section>
 

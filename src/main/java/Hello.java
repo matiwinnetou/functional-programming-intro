@@ -22,13 +22,6 @@ public class Hello {
         return ImmutableList.of(p1, p2);
     }
 
-    private static <T> Optional<T> findPoly() {
-        return people().stream()
-                .filter(isAdult())
-                .map(e -> (T) e)
-                .findAny();
-    }
-
     public static final Function<Double, String> KG_TO_STONES = weight -> String.format("%f stones", weight * 0.157473);
 
     public static void main(String[] args) {
