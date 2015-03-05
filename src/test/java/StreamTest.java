@@ -92,6 +92,15 @@ public class StreamTest {
     }
 
     @Test
+    public void testFilter() {
+        final List<Integer> ints = Stream.of(1, 2, 3, 4, 5, 6, 7, 8)
+                .filter(i -> i % 2 == 0)
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(ImmutableList.of(2, 4, 6, 8), ints);
+    }
+
+    @Test
     //fold
     public void testReduceGenerateRandomIds_With_Max_Reduce() {
         Stream.generate(() -> UUID.randomUUID().toString())

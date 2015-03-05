@@ -19,6 +19,7 @@ public class OptionalTest {
                 .map(str -> str.length());
 
         maybeInt.ifPresent(i -> System.out.println(i));
+
         Assert.assertTrue(maybeInt.isPresent());
     }
 
@@ -26,19 +27,21 @@ public class OptionalTest {
     public void testOptionalFlatMap() {
         final String string = "hello";
 
-        final Optional<String> stringOpt = Optional.of(string).flatMap(str -> optStr());
-        Assert.assertFalse(stringOpt.isPresent());
+        //final Optional<Optional<String>> s = Optional.of(string).map(str -> maybeString());
+
+        final Optional<String> maybeString = Optional.of(string).flatMap(str -> maybeString());
+        Assert.assertFalse(maybeString.isPresent());
     }
 
     @Test
     public void testPerson_Address_AndFlatMap() {
         final Map<String, Person> people = people();
 
-        final Optional<Integer> postCodeOpt = Optional.ofNullable(people.get("jan"))
+        final Optional<Integer> maybePostCode = Optional.ofNullable(people.get("jan"))
                 .flatMap(p -> p.getAddress())
                 .map(address -> address.getPostCode());
 
-        Assert.assertFalse(postCodeOpt.isPresent());
+        Assert.assertFalse(maybePostCode.isPresent());
     }
 
     @Test
@@ -80,7 +83,6 @@ public class OptionalTest {
     }
 
     @Test
-    //flatmap hell
     public void testOptionalZip_WithPlainZip() {
         final Optional<String> nameOpt = Optional.ofNullable("Jan");
         final Optional<String> surnameOpt = Optional.ofNullable("Koziol");
@@ -142,13 +144,7 @@ public class OptionalTest {
     }
 
 
-//    public static <T1, T2, R> Optional<R> zip(final Optional<? extends T1> a,
-//                                              final Optional<? extends T2> b,
-//                                              final BiFunction<? super T1, ? super T2, ? extends R> zipFunction) {
-//        return a.flatMap(aa -> b.map(bb -> zipFunction.apply(aa, bb)));
-//    }
-
-    private Optional<String> optStr() {
+    private Optional<String> maybeString() {
         return Optional.ofNullable(null);
     }
 
