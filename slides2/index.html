@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>FP with Java 8</title>
+		<title>FP with Java 8 (Part 2)</title>
 
 		<meta name="description" content="Functional programming with Java 8">
 		<meta name="author" content="Mateusz Szczap">
@@ -43,7 +43,7 @@
 			<div class="slides">
 				<section>
 					<h1>FP</h1>
-                    <h3>with Java 8</h3>
+                    <h3>with Java 8 (Part 2)</h3>
     					<p>
                             <small>Mateusz Szczap</small><br>
                             <small>Email:&nbsp;<a href="emailto:mszczap@ebay.com">mszczap@ebay.com</a></small><br>
@@ -54,138 +54,24 @@
 				</section>
 
                 <section>
-                    <h2>What is it?</h2>
-                    <blockquote>"At the heart of functional programming is thinking about your problem domain in terms of immutable values and functions that translate between them."</blockquote>
-                </section>
-
-                <section>
-                    <h2>Advantages</h2><p>
+                    <h2>Recap</h2>
                     <ul>
-                        <li><blockquote>"Functional programming aims to let you more easily write programs that are concise, with fewer bugs and parallelizable."</blockquote></li>
-                        <li><blockquote>"Using the Functional style allows code to be written that declares its intent clearly, without being mixed up with control flow statements(...)"</blockquote></li>
-                        <li><blockquote>"Because of the principles like side-effect free programming [mutating state], it is much easier to reason about code, and check it's correctness."</blockquote></li>
+                        <li>Definitions</li>
+                        <li>Basic properties of FP, e.g. Immutability, Side-Effect Free</li>
+                        <li>Pragmatics and Academics followers of FP (strict or pragmatic FP)</li>
+                        <li>Function as values, e.g. Function&lt;Integer,Integer&gt; inc = i -> i + 1</li>
+                        <li>We covered typical function operators, map, flatMap, zip, concat, reduce, etc</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h2>Why? What for? Opinions..</h2><p>
+                    <h2>Recap</h2>
                     <ul>
-                        <li>WHAT instead of HOW? Declaratively communicates programmer's indent clearly</li>
-                        <li>more concise code *IF NOT* abused increases code readability</li>
-                        <li>easier to do parallel programming (immutable data structures, which are thread safe)</li>
-                        <li>ability to write less error prone code</li>
+                        <li>Higher Order Function, passing and returning them to/from methods</li>
+                        <li>Function Application, e.g. square.apply(2) equals 4</li>
+                        <li>Function Composition (compose and andThen), e.g. f(g(x))</li>
+                        <li>Reductions, a list of values reducing to one value, e.g. int stream's minumium</li>
                     </ul>
-                </section>
-
-                <section>
-                    <h2>Sceptic's view</h2>
-                    <blockquote>"There is of course nothing that is possible in functional but not imperative programming."</blockquote>
-                </section>
-
-                <section>
-                    <h2>What is the point of all of this?</h2>
-                    <blockquote>"The point of different programming paradigms isn't to make things possible that weren't possible before, it's to make things easy that were hard before."</blockquote>
-                    <blockquote>"Imperative and functional programming are not opposites, FP is just simply programming without Side-Effects."</blockquote>
-                </section>
-
-                <section>
-                    <h2>Nothing comes for free...</h2>
-                    <ul>
-                        <li>investment into learning new paradigm (brain IOPs)</li>
-                        <li>hard to understanding functional jargon (HOF, RT, Side-Effect Free, Monad, Monoid, Functor or Applicative Functor)?</li>
-                        <li>FP is grounded in Category Theory and lots of people in FP use those academic terms</li>
-                        <li>community is divided into practical programmers and academics followers of FP</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>Your Expectations - What I can deliver</h2><p>
-                    <img src="fp_in_5_mins.jpg" width="30%" height="30%">
-                    <blockquote>"Like OOP learning FP is more like a journey than something you can learn in 1-2 hours."</blockquote>
-                </section>
-
-                <section>
-                    <h2>What is a function?</h2>
-                    <blockquote>"In mathematics, a function is a relation between a set of inputs and a set of permissible outputs with the property that each input is related to exactly one output."</blockquote>
-                    <br>
-                    <ul>
-                        <li>function's output is only dependant on input variables</li>
-                        <li>function's output is NOT dependant upon shared mutable variables</li>
-                    </ul>
-                    <blockquote>"Function that meets such criteria in Computer Science we call - a pure function.</blockquote>
-                </section>
-               
-                <section>
-                    <h2>FP - declarative example</h2><p>
-                    <pre><code>
-final ImmutableList&lt;Person&gt; persons = ImmutableList.of(
-    new Person("Patrick", Person.Gender.MALE, 170, 30),
-    new Person("Stefan", Person.Gender.MALE , 180, 35),
-    new Person("Julia", Person.Gender.FEMALE, 161, 25)
-);
-
-persons.stream()
-    .filter(p -> p.getGender() == Person.Gender.MALE)
-    .mapToDouble(p -> p.getHeight())
-    .average()
-    .ifPresent(average -> System.out.println(average));
---
-175.0
-                    </code></pre>
-                </section>
-
-                <section>
-                    <h2>Imperative example</h2><p>
-                    <pre><code>
-ImmutableList&lt;Person&gt; persons = ImmutableList.of(
-  new Person("Patrick", Person.Gender.MALE, 170, 30),
-  new Person("Stefan", Person.Gender.MALE, 180, 35),
-  new Person("Julia", Person.Gender.FEMALE, 161, 25)
-);
-
-double sum = 0.0D;
-for (Person p : persons) {
-  if (p.gender == Person.MALE) {
-   sum += p.getHeight();
-  }
-}
-
-double avg = persons.size() == 0 ? 0: sum / persons.size();
-System.out.println(avg);
-                    </code></pre>
-                </section>
-
-                <section>
-                    <h2>FP is *NOT* new but... unfamiliar, academic and alien?</h2>
-                    <br>
-                    <h2>Scheme</h2>
-                    <pre><code>
-(define (add-three number)
-(+ number 3))
-
-(define (add-three-to-each sent)
-(every add-three sent))
-
-> (add-three-to-each '(1 9 9 2))
-(4 12 12 5)
-                    </code></pre>
-                </section>
-
-                <section>
-                    <h2>FP is *NOT* new</h2>
-                    <p>Purely functional:</p>
-                    <ul>
-                        <li>Haskell</li>
-                        <li>Lisp/Scheme</li>
-                    </ul>
-                    <p>OOP mixed with FP</p>
-                    <ul>
-                        <li>C#</li>
-                        <li>F#</li>
-                        <li>Java 8</li>
-                        <li>Scala</li>
-                    </ul>
-                    <p>Java 8 is to C# what Scala is to F#.</p>
                 </section>
 
                 <section>
@@ -304,93 +190,6 @@ private &lt;T&gt; T reduce(Function&lt;Person, T&gt; mapping, Monoid&lt;T&gt; mo
                 </section>
 
                 <section>
-                    <h2>Higher Order Function (HOF)</h2>
-                    <blockquote>"In FP higher order function is a function that either takes a function as a parameter or outputs a function as a return value."</blockquote>
-                </section>
-
-                <section>
-                    <h2>HOF as an input</h2>
-                    <pre>
-                        <code>
-Function&lt;Double, String&gt; KG_TO_STONES = weight -> String.format("%f stones", weight * 0.157473);
-
-static void printWeight(double weightInKg, Function&gt;Double, String&gt; scale) {
-    System.out.println("Weight: " + scale.apply(weightInKg));
-}
-
-public static void main(String[] args) {
-    printWeight(6.4D, KG_TO_STONES);
-}
---
-Weight: 1.007827 stones
-                        </code>
-                    </pre>
-                    <blockquote>1 stone = 6.350 kg</blockquote>
-                    <a href="http://en.wikipedia.org/wiki/Stone_%28unit%29">http://en.wikipedia.org/wiki/Stone_%28unit%29</a>
-                </section>
-
-                <section>
-                    <h2>@FunctionalInterface annotation</h2>
-                    <ul>
-                        <li>Functional interfaces with only one method should be annotated in order to hint compiler this is an interface, which allows to create anonymous lambda functions</li>
-                        <li>If you forget to annotate single method interface with this annotation, java compiler will still allow you to use this interface as functional interface. It is therefore only a so called - marker annotation.</li>
-                    </ul>
-                        <pre>
-                            <code>
-@FunctionalInterface
-public interface Predicate&lt;T&gt; {
-    boolean test(T t);
-}
-                            </code>
-                        </pre>
-                </section>
-
-                <section>
-                    <h2>HOF as an output</h2>
-                    <pre>
-                        <code>
-Predicate&lt;Person&gt; isAdult() {
-    return p -> p.getAge() &gt;= 18;
-}
-
-ImmutableList&lt;Person&gt; persons = ImmutableList.of(
-    new Person("Patrick", Person.Gender.MALE, 170, 30),
-    new Person("Stefan", Person.Gender.MALE , 180, 17),
-    new Person("Julia", Person.Gender.FEMALE, 161, 25)
-);
-
-persons.stream()
-    .filter(isAdult())
-    .forEach(p -> System.out.printf("Adult person: &#37;s:\n", p));
----
-Adult person: Person{name='Patrick', height=170, gender=MALE, age=30}:
-Adult person: Person{name='Julia', height=161, gender=FEMALE, age=25}:
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Function Application</h2>
-                    <pre>
-                        <code>
-@Test
-public void testAddOneFunction() {
-    Function&lt;Integer, Integer&gt; addOne = i -&gt; i + 1;
-
-    Assert.assertEquals(Integer.valueOf(3), addOne.apply(2));
-}
-
-@Test
-public void testSquareFunction() {
-    Function&lt;Integer, Integer&gt; squareFun = i -> i * i;
-
-    Assert.assertEquals(Integer.valueOf(4), squareFun.apply(2));
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
                     <h2>Loan Pattern - 1</h2>
                     <pre>
                         <code>
@@ -472,131 +271,6 @@ people.forEach(p -> System.out.println(p));
                 </section>
 
                 <section>
-                    <h2>Function Composition - f(g(x))</h2>
-                    <blockquote>"In mathematics, function composition is the pointwise application of one function to the result of another to produce a third function."</blockquote>
-                    <blockquote>"The term "composition of functions" (or "composite function") refers
-                        to the combining of functions in a manner where the output from one function
-                        becomes the input for the next function."</blockquote>
-                </section>
-
-                <section>
-                    <h2>Function Composition - compose</h2>
-                    <pre>
-                        <code>
-java.util.function.Function&lt;T, R&gt;:
-                            
-default &lt;V&gt; Function&lt;V, R&gt; compose(Function&lt;? super V, ? extends T&gt; before) {
-    return (V v) -> apply(before.apply(v));
-}
-                        </code>
-                    </pre>
-                    <pre>
-                        <code>
-@Test
-public void testComposed1() {
-    Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
-    Function&lt;Integer, Integer&gt; square = i -> i * i;
-
-    Function&lt;Integer, Integer&gt; composed = square.compose(addOne);
-
-    List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
-      .map(composed)
-      .collect(Collectors.toList());
-
-    Assert.assertEquals(Lists.newArrayList(4, 9, 16, 25, 36), ints);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Function Composition - andThen</h2>
-                    <pre>
-                        <code>
-java.util.function.Function&lt;T, R&gt;:
-
-default &lt;V&gt; Function&lt;T, V&gt; andThen(Function&lt;? super R, ? extends V&gt; after) {
-    return (T t) -> after.apply(apply(t));
-}
-                    </code>
-                    </pre>
-                    <pre>
-                        <code>
-@Test
-public void testComposed2() {
-    Function&lt;Integer, Integer&gt; addOne = i -> i + 1;
-    Function&lt;Integer, Integer&gt; square = i -> i * i;
-
-    Function&lt;Integer, Integer&gt; composed = addOne.andThen(square);
-
-    List&lt;Integer&gt; ints = Lists.newArrayList(1, 2, 3, 4, 5).stream()
-      .map(composed)
-      .collect(Collectors.toList());
-
-    Assert.assertEquals(Lists.newArrayList(4, 9, 16, 25, 36), ints);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Side Effect free programming</h2>
-                    <blockquote>"In classical FP a side effect is a situation in which there is a mutation to a state.
-                        Classical FP programming operates only on immutable data structures, instead of mutating state, FP programs yield a new state based on old state often using recursion."</blockquote>
-                    <blockquote>"Procedure is often used to refer to a chunk of code with side-effects."</blockquote>
-                </section>
-
-                <section>
-                    <h2>Side-Effect - lenient or strict</h2>
-                    <ul>
-                        <li>PRAGMATICS - lenient - local side effects acceptable</li>
-                        <li>THEORISTS - strict - no side effects acceptable at all</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>Side-Effect - lenient example</h2>
-                    <pre>
-                        <code>
-public ImmutableList&lt;Sys&gt; hitCountSys() {
-    ImmutableList.Builder&lt;Sys&gt; builder = ImmutableList.builder();
-    builder.add(Timer.initial(metricRegistry));
-    builder.add(new Normalizer());
-    builder.add(new DefaultsProcessor());
-    builder.add(new ApiMapper(geo));
-    builder.add(new HitCountSearch(searchService));
-    builder.add(new AsyncProcessor(ImmutableList.of()));
-    builder.add(Timer.checkpoint("ecs.hitCount"));
-
-    return builder.build();
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Side-Effect - strict example</h2>
-                    <pre>
-                        <code>
-public OptionalDouble malesAverageHeight() {
-    return people().stream()
-    .filter(p -> p.getGender() == Person.Gender.MALE)
-    .mapToDouble(p -> p.getHeight())
-    .average();
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Side-Effect Free - why?</h2>
-                    <ul>
-                        <li>easier to reason about the immutable code</li>
-                        <li>thread safe by default</li>
-                    </ul>
-                </section>
-
-                <section>
                     <h2>Are Exceptions a new GOTO?</h2>
                     <ul>
                         <li>Exceptions are invisible in source code - there is no way to see which exceptions might be thrown and from where</li>
@@ -624,6 +298,7 @@ public OptionalDouble malesAverageHeight() {
                     <h2>Exception alternatives</h2>
                     <ul>
                         <li>Optional Monad - maybe value</li>
+                        <li>Elvis operator but not supported in Java (Groovy, Kotlin)</li>
                         <li>Try Monad - maybe value with possible exception</li>
                     </ul>
                     <p>Optional Monad is present in Java 8, Try Monad as a library</p>
@@ -679,112 +354,6 @@ public void testMemoization() {
                 <section>
                     <h2>Memoization - caveats</h2>
                     <blockquote>"There is a kind of function that may pose a problem: recursive functions that call themselves several times with the same argument may not be memoized this way."</blockquote>
-                </section>
-
-                <section>
-                    <h2>Streams - generate</h2>
-                    <blockquote>"A stream is a continuous flow of data."</blockquote>
-                    <pre>
-                        <code>
-@Test
-public void testGenerateSequenceOnes() {
-    List&lt;Integer&gt; ints = Stream.generate(() -> 1)
-        .limit(10)
-        .collect(Collectors.toList());
-
-    Assert.assertEquals(Lists.newArrayList(1,1,1,1,1,1,1,1,1,1), ints);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Streams - iterate</h2>
-                    <pre>
-                        <code>
-@Test
-public void testGenerateSequenceInc() {
-    List&lt;Integer&gt; ints = Stream.iterate(0, i -> i + 1)
-      .limit(10)
-      .collect(Collectors.toList());
-
-    Assert.assertEquals(Lists.newArrayList(0,1,2,3,4,5,6,7,8,9), ints);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Streams - concat</h2>
-                    <pre>
-                        <code>
-@Test
-public void testConcat() {
-    Stream&lt;Integer&gt; r1 = Stream.of(1, 2, 3);
-    Stream&lt;Integer&gt; r2 = Stream.of(3, 4, 5);
-
-    List&lt;Integer&gt; collect = Stream.concat(r1, r2)
-        .distinct()
-        .sorted(Comparator.reverseOrder())
-        .collect(Collectors.toList());
-
-    Assert.assertEquals(ImmutableList.of(5, 4, 3, 2, 1), collect);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Stream - FibonacciStream</h2>
-                    <pre>
-                        <code>
-@Test
-public void testFibonacciInfinite_WithPeek() {
-    IntStream intStream = FibonacciIterator.infiniteStream();
-
-    long sum = intStream
-        .peek(i -> System.out.println(i))
-        .limit(10)
-        .sum();
-
-    Assert.assertEquals(231, sum);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Stream - FibonacciStream</h2>
-                    <pre>
-                        <code>
-public class FibonacciIterator implements PrimitiveIterator.OfInt {
-
-    private int beforePrevious = 0;
-    private int previous = 1;
-
-    @Override
-    public boolean hasNext() {
-        return true;
-    }
-
-    @Override
-    public int nextInt() {
-        int result = beforePrevious + previous;
-        beforePrevious = previous;
-        previous = result;
-
-        return result;
-    }
-
-    public static IntStream infiniteStream() {
-        Spliterator.OfInt spliterator = Spliterators.spliteratorUnknownSize(new FibonacciIterator(), Spliterator.ORDERED);
-
-        return StreamSupport.intStream(spliterator, false);
-    }
-
-}
-                        </code>
-                    </pre>
                 </section>
 
                 <section>
@@ -844,47 +413,6 @@ public void curryAdderTest() {
                 </section>
 
                 <section>
-                    <h2>Reductions</h2>
-                    <blockquote>In spirit of side-effect free programming a lot of traditional computations with loops mutating state can be achieved using "reductions".</blockquote>
-                </section>
-
-                <section>
-                    <h2>Folds/Reductions</h2>
-                    <pre>
-                        <code>
-private static ImmutableList&lt;Person&gt; people() {
-    Person p1 = new Person("Jan", Person.Gender.MALE, 172, 80, Optional.of(new Person.Address("Albert-Einstein", 1, 14345)));
-    Person p2 = new Person("Kathy", Person.Gender.FEMALE, 160, 16);
-
-    return ImmutableList.of(p1, p2);
-}
-
-Integer totalAge = people().values().stream()
-    .map(Person::getAge) // p -> p.getAge()
-    .reduce(0, (age1, age2) -> age1 + age2);
---
-96
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Product Reduction</h2>
-                    <pre>
-                        <code>
-@Test
-public void testReduceWithProduct() {
-    long result = Stream.of(1, 2, 3)
-        .filter(i -> i >= 2)
-        .reduce(1, (prev, next) -> prev * next);
-
-    Assert.assertEquals(6, result);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
                     <h2>Monoid based reduction</h2>
                     <pre>
                         <code>
@@ -903,110 +431,6 @@ public void testAdditionMonoid() {
     int reduced = reduceAge(people(), Monoid.ADDITION_INT_MONOID);
 
     assertEquals(72, reduced);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Collector - a general reducer</h2>
-                    <blockquote>"A most general object to help in reduction operation in java is - Collector."</blockquote>
-                    <p>A collector consists of:</p>
-                    <ul>
-                        <li>a supplier - that creates an instance</li>
-                        <li>an accumulator - that defines how to add one element</li>
-                        <li>a combiner - how to combine (add) left and right side together</li>
-                        <li>a finisher - once data is added - how to finally assemble it together</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>Collector - own example</h2>
-                    <pre>
-                        <code>
-public class ImmutableListCollector&lt;T&gt; implements Collector&lt;T, ImmutableList.Builder&lt;T&gt;, ImmutableList&lt;T&gt;&gt; {
-
-    public Supplier&lt;ImmutableList.Builder&lt;T&gt;&gt; supplier() {
-        return () -> ImmutableList.builder();
-    }
-
-    public BiConsumer&lt;ImmutableList.Builder&lt;T&gt;, T> accumulator() {
-        return (builder, t) -> builder.add(t);
-    }
-
-    public BinaryOperator&lt;ImmutableList.Builder&lt;T&gt;&gt; combiner() {
-        return (left, right) -> {
-            left.addAll(right.build());
-
-            return left;
-        };
-    }
-
-    public Function&lt;ImmutableList.Builder&lt;T&gt;, ImmutableList&lt;T&gt;&gt; finisher() {
-        return ImmutableList.Builder::build;
-    }
-
-    public Set&lt;Collector.Characteristics> characteristics() {
-        return EnumSet.of(Collector.Characteristics.UNORDERED);
-    }
-
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Own ImmutableListCollector usage</h2>
-                    <pre>
-                        <code>
-@Test(expected = UnsupportedOperationException.class)
-    public void testOwnCollector() {
-    ImmutableList&lt;String&gt; collect = Stream
-        .generate(() -> UUID.randomUUID().toString())
-        .limit(100)
-        .collect(new ImmutableListCollector<>());
-
-    collect.add("1"); //BOOOOM
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Grouping</h2>
-                    <pre>
-                        <code>
-@Test
-public void testGrouping() {
-    Map&lt;Person.Gender, List&lt;Person&gt;&gt; peopleByGender = people().stream()
-        .collect(Collectors.groupingBy(t -> t.getGender()));
-
-    ImmutableMap&lt;Person.Gender, ImmutableList&lt;Person&gt;&gt; expectedPeopleByGender = ImmutableMap.of(
-        Person.Gender.MALE, ImmutableList.of(patrick(), stefan()),
-        Person.Gender.FEMALE, ImmutableList.of(julia())
-    );
-
-    assertEquals(expectedPeopleByGender, peopleByGender);
-}
-                        </code>
-                    </pre>
-                </section>
-
-                <section>
-                    <h2>Partitioning</h2>
-                    <pre>
-                        <code>
-@Test
-public void testPartitioning() {
-    Map&lt;Boolean, List&lt;Person&gt;&gt; peopleByMaturity = people().stream()
-        .collect(Collectors.partitioningBy(p -> p.getAge() >= 18));
-
-    ImmutableMap&lt;Boolean, ImmutableList&lt;Person&gt;&gt; expectedPeopleByGender = ImmutableMap.of(
-        Boolean.TRUE, ImmutableList.of(patrick(), julia()),
-        Boolean.FALSE, ImmutableList.of(stefan())
-    );
-
-    assertEquals(expectedPeopleByGender, peopleByMaturity);
 }
                         </code>
                     </pre>
@@ -1083,7 +507,7 @@ public class Maybe&lt;A&gt; implements Monad&lt;A,Maybe&lt;?&gt;&gt; {
                 </section>
 
                 <section>
-                    <h2>Monad - Optional</h2>
+                    <h2>DEMO - Monad - Optional</h2>
                 </section>
 
                 <section>
@@ -1097,56 +521,7 @@ public class Maybe&lt;A&gt; implements Monad&lt;A,Maybe&lt;?&gt;&gt; {
                 </section>
 
                 <section>
-                    <h2>Functional Operators - Part 1</h2>
-                    <ul>
-                        <li>zip - brings together two values</li>
-                        <li>concat - brings together two values, usually one after another, good example: RxJava - Observable</li>
-                        <li>map - transforms one value into another (one type to another)</li>
-                        <li>flatMap - transforms one value into another and flattens it, e.g. avoids Optional&lt;Optional&lt;T&gt;&gt;</li>
-                        <li>foldLeft - folds starting from the left</li>
-                        <li>foldRight - folds starting from the right</li>
-                        <li>reduceLeft - reduces from left</li>
-                        <li>reduceRight - reduces from right</li>
-                    </ul>
-                    <br>
-                    <blockquote>"Fold takes an explicit initial value for the accumulator while reduce uses the first element of the input list as the initial accumulator value."</blockquote>
-                </section>
-
-                <section>
-                    <h2>Functional Operators - Part 2</h2>
-                    <ul>
-                        <li>sequence</li>
-                        <li>findAny</li>
-                        <li>findFirst</li>
-                        <li>forEach</li>
-                        <li>min</li>
-                        <li>max</li>
-                        <li>forAll</li>
-                        <li>exists</li>
-                        <li>dropWhile</li>
-                        <li>takeWhile</li>
-                        <li>distinct</li>
-                        <li>limit</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>What is Java 8 missing</h2>
-                    <ul>
-                        <li>ADT - Algebraic Data Types</li>
-                        <li>Pattern Matching</li>
-                        <li>(lifting) - lifting method to function</li>
-                        <li>Tail recursion</li>
-                        <li>value types - case classes</li>
-                        <li>standard functional methods like zip, takeWhile, etc, try [JOOL] - https://github.com/jOOQ/jOOL</li>
-                        <li>limited monads in standard library, e.g. lack of Try Monad</li>
-                    </ul>
-                </section>
-
-                <section>
                     <h2>Books</h2>
-                    <p>Java 8 in Action: Lambdas, Streams, and Functional-Style Programming</p>
-                    <img src="book2.png" height="15%" width="15%">
                     <p>Functional Programming in Scala</p>
                     <img src="book1.png" height="15%" width="15%">
                 </section>
